@@ -11,7 +11,7 @@ def generate_site():
     post_header = open(POST_HEADER).read()
     header = open(HEADER).read()
     footer = open(FOOTER).read()
-    posts = get_post_list()
+    posts = get_post_list().sort(reverse=True)
     generate_post_pages(posts, post_header, footer)
     generate_index_pages(posts, header, footer)
 
