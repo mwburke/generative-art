@@ -16,14 +16,14 @@ function polygon(x, y, radius, npoints, rot=0) {
 }
 
 
-function hexagon(x, y, radius, rot=0, r, g, b, opacity=200) {
-    fill(r, g, b, opacity);
+function hexagon(x, y, radius, rot=0, color) {
+    fill(color);
     noStroke();
     polygon(x, y, radius, 6, rot);
 }
 
 
-function hex_ring(ring_radius, ring_rot, radius, rot, r, g, b, opacity) {
+function hex_ring(ring_radius, ring_rot, radius, rot, color) {
     var angle = TWO_PI / 6;
     var rot_angle = TWO_PI * (360 - ring_rot / 360)
     var x = width / 2
@@ -32,7 +32,7 @@ function hex_ring(ring_radius, ring_rot, radius, rot, r, g, b, opacity) {
     for (var a = 0; a < TWO_PI; a += angle) {
         var sx = x + cos(a + rot_angle) * ring_radius;
         var sy = y + sin(a + rot_angle) * ring_radius;
-        hexagon(sx, sy, radius, rot, r, g, b, opacity)
+        hexagon(sx, sy, radius, rot, color)
   }
 }
 
@@ -78,20 +78,20 @@ function moving_hex_ring(radius_speed,
 		radius = (initial_radius + frameCount * (CANVAS_WIDTH / 2 + hex_radius * 2) / radius_speed / FRAMERATE) % (CANVAS_WIDTH / 2 + hex_radius * 2);
 	}
 	if (rotation_speed == 0) {
-		rot = 0
+		rot = initial_rotation
 	} else {
 		rot = (initial_rotation + frameCount / FRAMERATE * 360 / rotation_speed) % 360;
 	}
 	if (hex_rotation_speed == 0) {
-		hex_rot = 0
+		hex_rot = hex_initial_rotation
 	} else {
 		hex_rot = (hex_initial_rotation + frameCount / FRAMERATE * 360 / hex_rotation_speed) % 360;
 	}
-	colors = color_generator();
-	hex_ring(radius, rot, hex_radius, hex_rot, colors[0], colors[1], colors[2], colors[3]);
+	colors = color_generator(frameCount, radius / (CANVAS_WIDTH / 2 + hex_radius * 2));
+	hex_ring(radius, rot, hex_radius, hex_rot, colors);
 }
 
 
 function constant_color(r, g, b, opactiy) {
-	return [r, g, b, opactiy]
+	return color(r, g, b, opactiy)
 }
