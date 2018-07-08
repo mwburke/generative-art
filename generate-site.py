@@ -57,7 +57,7 @@ def generate_index_page(has_previous, has_next, page_num, page_posts, header, fo
             f.write(post_div(post, True))
 
         for post in page_posts:
-            f.write(post_script(post))
+            f.write(post_script(post, True))
 
         f.write('  <table id="arrows"><tbody>\n  <tr>\n')
         if has_previous | has_next:
@@ -73,8 +73,13 @@ def generate_index_page(has_previous, has_next, page_num, page_posts, header, fo
         f.write('\n    </tr>\n  </tbody></table>')
         f.write(footer)
 
-def post_script(post):
-    return '    <script src="../js/posts-js/' + str(post) + '"></script>\n'
+def post_script(post, index=False):
+    html = ''
+    if index:
+        html += '    <script src="js/posts-js/' + str(post) + '"></script>\n'
+    else: 
+        html += '    <script src="../js/posts-js/' + str(post) + '"></script>\n'
+    return html
 
 def post_div(post, index=False):
     html = ''
