@@ -104,7 +104,7 @@ function constant_color(r, g, b, opactiy) {
 	return color(r, g, b, opactiy)
 }
 
-
+// Color palettes for various uses
 var color_palettes = {
     "vaporwave" : ["#94D0FF","#8795E8","#966bff","#AD8CFF","#C774E8","#c774a9","#FF6AD5","#ff6a8b","#ff8b8b","#ffa58b","#ffde8b","#cdde8b","#8bde8b","#20de8b"],
     "cool" : ["#FF6AD5","#C774E8","#AD8CFF","#8795E8","#94D0FF"],
@@ -117,7 +117,9 @@ var color_palettes = {
 }
 
 
-
+/* Use the left and right arrows keys to navigate through the
+ * different posts on the site.
+ */
 function leftArrowPressed() {
   var leftarrow = document.getElementById("leftarrow");
   if (leftarrow != null) {

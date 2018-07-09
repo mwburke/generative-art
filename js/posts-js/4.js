@@ -1,33 +1,43 @@
-var i;
-var color_values;
+var input, button, base_color, hex_pattern;
 
 function setup() {
     var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     myCanvas.parent('viz4');
-    background(247,247,247);
-    i = 0;
-    color_values = color(palette[i]).levels;
+    background(5, 5, 5, 0);
+
+    input = createInput("#FF6AD5");
+    input.position(50, 20);
+
+    //input.value("#FF6AD5");
+    base_color = color("#FF6AD5");
+    hex_pattern = RegExp("#[0-9a-fA-F]{6}");
+
+    button = createButton('generate color palette');
+    button.position(50, 40);
+    button.style("position", "relative");
+    button.mousePressed(generate_palette);
+
+
+    textAlign(CENTER);
+    textSize(50);
+
+    generate_palette();
 }
 
-function draw() {
-    if ((frameCount % 10) == 0) {
-        background_color = update_color();
-    } else {
-        background_color = color(color_values);
+
+
+function generate_palette() {
+    var input_color = input.value();
+    if (hex_pattern.test(input_color)) {
+        base_color = color(input_color);
+        for (var i=0; i<5; i++) {
+            rect_color = base_color.levels;
+            rect_color[0] += random(-40, 40);
+            rect_color[1] += random(-40, 40);
+            rect_color[2] += random(-40, 40);
+            fill(rect_color);
+            noStroke();
+            rect(0, i * (CANVAS_WIDTH / 5), CANVAS_WIDTH, (i + 1) * (CANVAS_WIDTH / 5));
+        }
     }
-    background(background_color);
-}
-
-palette = color_palettes['cool'];
-
-update_color = function() {
-    color_values[0] += random(-5, 5);
-    color_values[1] += random(-5, 5);
-    color_values[2] += random(-5, 5);
-    return color(color_values)
-}
-
-function mousePressed() {
-    i++;
-    color_values = color(palette[i % 5]).levels;
 }
