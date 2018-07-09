@@ -1,10 +1,10 @@
 FRAMERATE = 60
-CANVAS_WIDTH = 400
-CANVAS_HEIGHT = 400
+CANVAS_WIDTH = 500
+CANVAS_HEIGHT = 500
 
 function polygon(x, y, radius, npoints, rot=0) {
   var angle = TWO_PI / npoints;
-  var rot_angle = TWO_PI * (360 - rot / 360)
+  var rot_angle = TWO_PI * (360 - rot) / 360
 
   beginShape();
   for (var a = 0; a < TWO_PI; a += angle) {
@@ -16,8 +16,11 @@ function polygon(x, y, radius, npoints, rot=0) {
 }
 
 
-function hexagon(x, y, radius, rot=0, color) {
-    fill(color);
+function hexagon(x, y, radius, rot=0, hex_color) {
+    if (typeof hex_color == "function") {
+      hex_color = hex_color(x, y, radius, rot);
+    }
+    fill(hex_color);
     noStroke();
     polygon(x, y, radius, 6, rot);
 }
@@ -33,7 +36,7 @@ function hex_ring(ring_radius, ring_rot, radius, rot, color) {
         var sx = x + cos(a + rot_angle) * ring_radius;
         var sy = y + sin(a + rot_angle) * ring_radius;
         hexagon(sx, sy, radius, rot, color)
-  }
+    }
 }
 
 /* This is a general function for creating sets of hexagon rings
@@ -43,33 +46,34 @@ function hex_ring(ring_radius, ring_rot, radius, rot, color) {
  * are generated from the 60 frames per second framerate.
  *
  * Inputs:
- * radius_speed: number of seconds to travel from edge of canvas to 
+ * radius_speed: number of seconds to travel from edge of canvas to
  *               the side. so it's kind of unintuitive but lower
  *               numbers result in higher speed. negative numbers
  *               have the same effect but move from outside in.
  *               UPDATE: it's not quite this but close enough lol
- * initial_radius: value from 0 to 1 where 0 is in the center and 1 
+ * initial_radius: value from 0 to 1 where 0 is in the center and 1
  *                 is at the edge of the canvas
  * hex_radius: hexagon radius value in pixels
- * rotation_speed: number of seconds to rotate 360 degrees, 
- *                 positive creates clockwise movement, negative 
+ * rotation_speed: number of seconds to rotate 360 degrees,
+ *                 positive creates clockwise movement, negative
  *                 creates counter-clockwise movement
  * hex_rotation_speed: number of seconds for each hexagon to rotate
  *                     360 degrees, positive creates clockwise movement,
  *                     negative creates counter-clockwise movement
  * initial_rotation: initial rotation in degrees, with 0 being straight up
  * hex_initial_rotation: initial rotation in degrees, with 0 being straight up
- * color_generator: function that generates four values: r, g, b, opacity
+ * color_generator: function that generates valid color string
 
  */
-function moving_hex_ring(radius_speed, 
-                         initial_radius, 
+function moving_hex_ring(radius_speed,
+                         initial_radius,
                          hex_radius,
                          rotation_speed,
                          hex_rotation_speed,
                          initial_rotation,
                          hex_initial_rotation,
-                         color_generator) {
+                         color_generator,
+                         color_func=false) {
 
 	initial_radius = (CANVAS_WIDTH + hex_radius * 2) / 2 * initial_radius;
 	if (radius_speed == 0) {
@@ -87,7 +91,11 @@ function moving_hex_ring(radius_speed,
 	} else {
 		hex_rot = (hex_initial_rotation + frameCount / FRAMERATE * 360 / hex_rotation_speed) % 360;
 	}
-	colors = color_generator(frameCount, radius / (CANVAS_WIDTH / 2 + hex_radius * 2));
+  if (color_func) {
+    colors = color_generator(frameCount, radius / (CANVAS_WIDTH / 2 + hex_radius * 2));
+  } else {
+    colors = color_generator
+  }
 	hex_ring(radius, rot, hex_radius, hex_rot, colors);
 }
 
@@ -95,3 +103,43 @@ function moving_hex_ring(radius_speed,
 function constant_color(r, g, b, opactiy) {
 	return color(r, g, b, opactiy)
 }
+
+
+var color_palettes = {
+    "vaporwave" : ["#94D0FF","#8795E8","#966bff","#AD8CFF","#C774E8","#c774a9","#FF6AD5","#ff6a8b","#ff8b8b","#ffa58b","#ffde8b","#cdde8b","#8bde8b","#20de8b"],
+    "cool" : ["#FF6AD5","#C774E8","#AD8CFF","#8795E8","#94D0FF"],
+    "crystal_pepsi" : ["#FFCCFF","#F1DAFF","#E3E8FF","#CCFFFF"],
+    "mallsoft" : ["#fbcff3","#f7c0bb","#acd0f4","#8690ff","#30bfdd","#7fd4c1"],
+    "jazzcup" : ["#392682","#7a3a9a","#3f86bc","#28ada8","#83dde0"],
+    "sunset" : ["#661246","#ae1357","#f9247e","#d7509f","#f9897b"],
+    "macplus" : ["#1b4247","#09979b","#75d8d5","#ffc0cb","#fe7f9d","#65323e"],
+    "seapunk" : ["#532e57","#a997ab","#7ec488","#569874","#296656"]
+}
+
+
+
+function leftArrowPressed() {
+  var leftarrow = document.getElementById("leftarrow");
+  if (leftarrow != null) {
+    leftarrow.click();
+  }
+}
+
+function rightArrowPressed() {
+  var rightarrow = document.getElementById("rightarrow");
+  if (rightarrow != null) {
+    rightarrow.click();
+  }
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+        case 37:
+            leftArrowPressed();
+            break;
+        case 39:
+            rightArrowPressed();
+            break;
+    }
+};

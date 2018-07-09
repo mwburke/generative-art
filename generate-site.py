@@ -11,14 +11,16 @@ def generate_site():
     post_header = open(POST_HEADER).read()
     header = open(HEADER).read()
     footer = open(FOOTER).read()
-    posts = get_post_list()[::-1]
+    posts = get_post_list()
     generate_post_pages(posts, post_header, footer)
     if len(posts) < 2:
         posts.append(None)
     generate_index_page(posts[0], posts[1], header, footer)
 
 def get_post_list():
-    return listdir('js/posts-js')
+    posts = listdir('js/posts-js')
+    posts.sort(reverse=True)
+    return posts
 
 def generate_post_pages(posts, header, footer):
     for i, post in enumerate(posts):
@@ -45,10 +47,10 @@ def generate_post_page(post, prev_post, next_post, header, footer):
         if (prev_post is not None) | (next_post is not None):
             f.write('  <table id="arrows"><tbody>\n  <tr>\n')
             if prev_post is not None:
-                f.write('      <td><a href="' + prev_post.replace('js', 'html') + '">' + LEFT_ARROW + '</a></td>')
+                f.write('      <td><a id="leftarrow" href="' + prev_post.replace('js', 'html') + '">' + LEFT_ARROW + '</a></td>')
 
             if next_post is not None:
-                 f.write('      <td><a href="' + next_post.replace('js', 'html') + '">' + RIGHT_ARROW + '</a></td>')
+                 f.write('      <td><a id="rightarrow" href="' + next_post.replace('js', 'html') + '">' + RIGHT_ARROW + '</a></td>')
             f.write('\n    </tr>\n  </tbody></table>')
             f.write(footer)
 
@@ -62,7 +64,7 @@ def generate_index_page(post, next_post, header, footer):
 
         if next_post is not None:
             f.write('  <table id="arrows"></tbody>\n  <tr>\n')
-            f.write('    <td><a href="posts/' + next_post.replace('js', 'html') + '">' + RIGHT_ARROW + '</a></td>')
+            f.write('    <td><a id="rightarrow" href="posts/' + next_post.replace('js', 'html') + '">' + RIGHT_ARROW + '</a></td>')
 
         f.write('\n    </tr>\n  </tbody></table>')
         f.write(footer)
@@ -71,7 +73,7 @@ def post_script(post, index=False):
     html = ''
     if index:
         html += '    <script src="js/posts-js/' + str(post) + '"></script>\n'
-    else: 
+    else:
         html += '    <script src="../js/posts-js/' + str(post) + '"></script>\n'
     return html
 
