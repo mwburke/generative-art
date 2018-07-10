@@ -82,7 +82,7 @@ function moving_hex_ring(radius_speed,
 		radius = (initial_radius + frameCount * (CANVAS_WIDTH / 2 + hex_radius * 2) / radius_speed / FRAMERATE) % (CANVAS_WIDTH / 2 + hex_radius * 2);
 	}
 	if (rotation_speed == 0) {
-		rot = initial_rotation
+		rot = initial_rotation;
 	} else {
 		rot = (initial_rotation + frameCount / FRAMERATE * 360 / rotation_speed) % 360;
 	}
