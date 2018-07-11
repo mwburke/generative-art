@@ -1,6 +1,6 @@
 function setup() {
     var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-    myCanvas.parent('viz3');
+    myCanvas.parent('viz003');
     background(247,247,247);
 
     noLoop();

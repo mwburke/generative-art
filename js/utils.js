@@ -25,6 +25,20 @@ function hexagon(x, y, radius, rot=0, hex_color) {
     polygon(x, y, radius, 6, rot);
 }
 
+function hexagon_outline(x, y, radius, rot=0, hex_color, opacity, stroke_weight) {
+      if (typeof hex_color == "function") {
+      hex_color = hex_color(x, y, radius, rot);
+    }
+
+    hex_color = hex_color.levels;
+    hex_color[3] = opacity;
+    hex_color = color(hex_color);
+    stroke(hex_color);
+    strokeWeight(stroke_weight);
+    fill(255, 255, 255, 0);
+    polygon(x, y, radius, 6, rot);
+}
+
 
 function hex_ring(ring_radius, ring_rot, radius, rot, color) {
     var angle = TWO_PI / 6;
@@ -145,3 +159,30 @@ document.onkeydown = function(evt) {
             break;
     }
 };
+
+
+function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color) {
+  this.i = i;
+  this.j = j;
+
+  if (j % 2 == 0) {
+    this.x = this.i * cellSize * 2 + xOffset;
+  } else {
+    this.x = this.i * cellSize * 2 + cellSize + xOffset;
+  }
+
+  this.y = this.j * cellSize * 1.7 + yOffset;
+
+  // this.hasPlayer = false;
+
+  this.show = function() {
+    stroke(stroke_color);
+    fill(fill_color);
+
+    push();
+    translate(this.x, this.y);
+    polygon(0, 0, cellSize, 6, 30);
+    pop();
+  }
+
+}

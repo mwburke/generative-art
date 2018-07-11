@@ -2,7 +2,7 @@ var circles = [];
 
 function setup() {
     var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-    myCanvas.parent('viz6');
+    myCanvas.parent('viz006');
 
     var circle_radius = 50;
     var arm_length = 120;

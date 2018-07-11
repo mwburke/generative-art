@@ -1,7 +1,7 @@
 
 function setup() {
     var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-    myCanvas.parent('viz1');
+    myCanvas.parent('viz001');
     background(247,247,247);
 
     frameRate(FRAMERATE);

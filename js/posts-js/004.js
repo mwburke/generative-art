@@ -2,7 +2,7 @@ var input, button, base_color, hex_pattern;
 
 function setup() {
     var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-    myCanvas.parent('viz4');
+    myCanvas.parent('viz004');
     background(5, 5, 5, 0);
 
     input = createInput("#FF6AD5");
