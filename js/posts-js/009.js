@@ -29,7 +29,6 @@ function draw() {
 function generate_color(x, y, opacity) {
     //value = (x + y) / CANVAS_WIDTH / 2;
     value = (x * 1.05) / CENTER / 2 + (y % CANVAS_HEIGHT / 2) / CENTER / 2;
-    console.log(value);
     color_values = color(d3.interpolateCubehelixDefault(value)).levels;
     color_values[3] = opacity;
     return color(color_values);
