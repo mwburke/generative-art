@@ -15,7 +15,6 @@ function polygon(x, y, radius, npoints, rot=0) {
   endShape(CLOSE);
 }
 
-
 function hexagon(x, y, radius, rot=0, hex_color) {
     if (typeof hex_color == "function") {
       hex_color = hex_color(x, y, radius, rot);
@@ -186,3 +185,5 @@ function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color) {
   }
 
 }
+
+
