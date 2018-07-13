@@ -160,7 +160,7 @@ document.onkeydown = function(evt) {
 };
 
 
-function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color) {
+function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gaps=false) {
   this.i = i;
   this.j = j;
 
@@ -180,7 +180,12 @@ function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color) {
 
     push();
     translate(this.x, this.y);
-    polygon(0, 0, cellSize, 6, 30);
+    if (no_gaps) {
+      polygon(0, 0, cellSize * 1.15, 6, 30);
+    } else {
+      polygon(0, 0, cellSize, 6, 30);
+    }
+
     pop();
   }
 

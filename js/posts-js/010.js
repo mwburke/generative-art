@@ -9,18 +9,18 @@ function setup() {
     var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     myCanvas.parent('viz010');
     background(247, 247, 247);
-
+    noStroke();
     generate();
 }
 
 
 
 function generate() {
-    var grid = new [];
+    var grid = [];
 
     for (j = 0; j < rows; j++) {
         for (i = 0; i < cols; i++) {
-            var cell = new Cell(i, j, cellSize, xOffset, yOffset, fill_generator(i, j), stroke_generator(i, j));
+            var cell = new Cell(i, j, cellSize, xOffset, yOffset, fill_generator(i, j), stroke_generator(i, j), false);
             grid.push(cell);
         }
     }
