@@ -1,5 +1,4 @@
 var cellSize = 20;
-var grid = [];
 var xOffset = 0;
 var yOffset = 15;
 var cols = Math.ceil((CANVAS_WIDTH - xOffset) / cellSize);
@@ -11,19 +10,20 @@ function setup() {
     myCanvas.parent('viz010');
     background(247, 247, 247);
 
+    generate();
+}
+
+
+
+function generate() {
+    var grid = new [];
+
     for (j = 0; j < rows; j++) {
         for (i = 0; i < cols; i++) {
             var cell = new Cell(i, j, cellSize, xOffset, yOffset, fill_generator(i, j), stroke_generator(i, j));
             grid.push(cell);
         }
     }
-
-    noLoop();
-}
-
-
-function draw() {
-    background(247, 247, 247);
 
     for (var i = 0; i < grid.length; i++) {
         grid[i].show();
@@ -41,4 +41,8 @@ function fill_generator(i, j) {
 
 function stroke_generator(i, j) {
     return color(0, 0, 0, 0);
+}
+
+function mousePressed() {
+    generate();
 }
