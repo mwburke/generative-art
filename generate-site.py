@@ -7,6 +7,7 @@ LEFT_ARROW = '<i class="fas fa-arrow-left"></i>'
 RIGHT_ARROW = '<i class="fas fa-arrow-right"></i>'
 PAGE_POST_COUNT = 5
 
+
 def generate_site():
     post_header = open(POST_HEADER).read()
     header = open(HEADER).read()
@@ -17,10 +18,12 @@ def generate_site():
         posts.append(None)
     generate_index_page(posts[0], posts[1], header, footer)
 
+
 def get_post_list():
     posts = listdir('js/posts-js')
     posts.sort(reverse=True)
     return posts
+
 
 def generate_post_pages(posts, header, footer):
     for i, post in enumerate(posts):
@@ -29,12 +32,13 @@ def generate_post_pages(posts, header, footer):
         else:
             prev_post = None
 
-        if  (i + 1) < len(posts):
+        if (i + 1) < len(posts):
             next_post = posts[i + 1]
         else:
             next_post = None
 
         generate_post_page(post, prev_post, next_post, header, footer)
+
 
 def generate_post_page(post, prev_post, next_post, header, footer):
     file_name = 'posts/' + post.replace('js', 'html')
@@ -50,7 +54,7 @@ def generate_post_page(post, prev_post, next_post, header, footer):
                 f.write('      <td><a id="leftarrow" href="' + prev_post.replace('js', 'html') + '">' + LEFT_ARROW + '</a></td>')
 
             if next_post is not None:
-                 f.write('      <td><a id="rightarrow" href="' + next_post.replace('js', 'html') + '">' + RIGHT_ARROW + '</a></td>')
+                f.write('      <td><a id="rightarrow" href="' + next_post.replace('js', 'html') + '">' + RIGHT_ARROW + '</a></td>')
             f.write('\n    </tr>\n  </tbody></table>')
             f.write(footer)
 
@@ -59,7 +63,7 @@ def generate_index_page(post, next_post, header, footer):
 
     with open('index.html', 'w') as f:
         f.write(header)
-        f.write(post_div(post, True))
+        f.write(post_div(post))
         f.write(post_script(post, True))
 
         if next_post is not None:
@@ -69,6 +73,7 @@ def generate_index_page(post, next_post, header, footer):
         f.write('\n    </tr>\n  </tbody></table>')
         f.write(footer)
 
+
 def post_script(post, index=False):
     html = ''
     if index:
@@ -77,15 +82,13 @@ def post_script(post, index=False):
         html += '    <script src="../js/posts-js/' + str(post) + '"></script>\n'
     return html
 
-def post_div(post, index=False):
+
+def post_div(post):
     html = ''
-    if index:
-        html += '  <a href="' + 'posts/' + post.replace('js', 'html') + '">'
     html += '\n    <div class="viz" id="viz' + post.replace('.js', '') + '"></div>'
-    if index:
-        html += '\n  </a>'
     html += '\n'
     return html
+
 
 if __name__ == '__main__':
     generate_site()

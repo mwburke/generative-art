@@ -172,8 +172,6 @@ function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gap
 
   this.y = this.j * cellSize * 1.7 + yOffset;
 
-  // this.hasPlayer = false;
-
   this.show = function() {
     stroke(stroke_color);
     fill(fill_color);
