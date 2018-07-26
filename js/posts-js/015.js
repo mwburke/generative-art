@@ -8,16 +8,16 @@ function setup() {
     var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     myCanvas.parent('viz015');
 
-    triangles.push(new jump_triangle(color(255, 0, 0, 100), 1, 1));
-    triangles.push(new jump_triangle(color(0, 255, 0, 100), -1, 1));
-    triangles.push(new jump_triangle(color(0, 0, 255, 100), 0, -1));
+    triangles.push(new jump_triangle(color(255, 0, 0, 255), 1, 1));
+    triangles.push(new jump_triangle(color(0, 255, 0, 255), -1, 1));
+    triangles.push(new jump_triangle(color(0, 0, 255, 255), 0, -1));
 }
 
 function draw() {
     blendMode(BLEND);
     background(247, 247, 247);
     strokeWeight(5);
-    blendMode(MULTIPLY);
+    blendMode(DIFFERENCE);
     for (i = 0; i < triangles.length; i++) {
         triangles[i].move();
         triangles[i].display()
