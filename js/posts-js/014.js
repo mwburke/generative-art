@@ -47,13 +47,14 @@ function generate_color(degree) {
     return color(ellipse_color);
 }
 
-
-function mousePressed() {
-    if ((j % 2) == 0) {
-        background(247, 247, 247);
-    } else {
-        background(50, 50, 50);
+function keyPressed() {
+    if (key == ' ') {
+        if ((j % 2) == 0) {
+            background(247, 247, 247);
+        } else {
+            background(50, 50, 50);
+        }
+        generate();
+        j++;
     }
-    generate();
-    j++;
 }
