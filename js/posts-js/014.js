@@ -48,7 +48,7 @@ function generate_color(degree) {
 }
 
 function keyPressed() {
-    if (key == ' ') {
+    if (key == 'B') {
         if ((j % 2) == 0) {
             background(247, 247, 247);
         } else {
