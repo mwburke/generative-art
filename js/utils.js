@@ -107,7 +107,7 @@ function moving_hex_ring(radius_speed,
   if (color_func) {
     colors = color_generator(frameCount, radius / (CANVAS_WIDTH / 2 + hex_radius * 2));
   } else {
-    colors = color_generator
+    colors = color_generator;
   }
 	hex_ring(radius, rot, hex_radius, hex_rot, colors);
 }
