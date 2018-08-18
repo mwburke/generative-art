@@ -43,7 +43,6 @@ function jump_triangle(triangle_color, jump_lr, jump_ud) {
 
     this.display = function() {
         stroke(triangle_color);
-        // fill(0, 0, 0, 0);
         fill(triangle_color);
         polygon(this.x, this.y, radius, poly_sides, this.rot);
     }

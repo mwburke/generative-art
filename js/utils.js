@@ -160,7 +160,7 @@ document.onkeydown = function(evt) {
 };
 
 
-function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gaps=false) {
+function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gaps=false, gap_ratio=1) {
   this.i = i;
   this.j = j;
 
@@ -181,7 +181,7 @@ function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gap
     if (no_gaps) {
       polygon(0, 0, cellSize * 1.15, 6, 30);
     } else {
-      polygon(0, 0, cellSize, 6, 30);
+      polygon(0, 0, cellSize * gap_ratio, 6, 30);
     }
 
     pop();
