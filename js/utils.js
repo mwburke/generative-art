@@ -45,7 +45,7 @@ function hex_ring(ring_radius, ring_rot, radius, rot, color) {
     var x = width / 2
     var y = height / 2;
 
-    for (var a = 0; a < TWO_PI; a += angle) {
+    for (var a = 0; a < TWO_PI - angle; a += angle) {
         var sx = x + cos(a + rot_angle) * ring_radius;
         var sy = y + sin(a + rot_angle) * ring_radius;
         hexagon(sx, sy, radius, rot, color)
