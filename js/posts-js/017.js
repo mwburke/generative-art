@@ -31,7 +31,7 @@ function generate_red() {
 
     for (j = -2; j < rows; j++) {
         for (i = -2; i < cols; i++) {
-            tempXOffset = xOffset * (frameCount % 30) / 30;
+            tempXOffset = xOffset * (frameCount % 90) / 90;
             var cell = new Cell(i, j, cellSize, tempXOffset, yOffset, red_generator(), stroke_generator(i, j), false, gap_ratio);
             grid.push(cell);
         }
