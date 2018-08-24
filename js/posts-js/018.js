@@ -24,9 +24,7 @@ function get_closest_distance(base_point, points) {
     for (var i=0; i < points.length; i++) {
         distances[i] = distance(base_point[0], points[i][0], base_point[1], points[i][1])
     }
-    //return Math.min(...distances)
-    sum = arr.reduce(function(a, b) { return a + b; });
-    return sum / arr.length
+    return Math.min(...distances)
 }
 
 
