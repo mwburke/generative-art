@@ -188,5 +188,3 @@ function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gap
   }
 
 }
-
-
