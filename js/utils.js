@@ -2,6 +2,10 @@ FRAMERATE = 60
 CANVAS_WIDTH = 500
 CANVAS_HEIGHT = 500
 
+
+
+
+
 function polygon(x, y, radius, npoints, rot=0) {
   var angle = TWO_PI / npoints;
   var rot_angle = TWO_PI * (360 - rot) / 360
@@ -158,6 +162,19 @@ document.onkeydown = function(evt) {
             break;
     }
 };
+
+
+function Triangle(x, y, height) {
+  this.x = x;
+  this.y = y;
+  this.height = height;
+
+  this.draw = function() {
+    triangle(this.x-this.height/Math.sqrt(3), this.y,
+             this.x, this.y-this.height,
+             this.x+this.height/Math.sqrt(3), this.y);
+  }
+}
 
 
 function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gaps=false, gap_ratio=1) {
