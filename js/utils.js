@@ -38,7 +38,7 @@ function hexagon_outline(x, y, radius, rot=0, hex_color, opacity, stroke_weight)
     hex_color = color(hex_color);
     stroke(hex_color);
     strokeWeight(stroke_weight);
-    fill(255, 255, 255, 0);
+    fill(247, 247, 247, 0);
     polygon(x, y, radius, 6, rot);
 }
 
@@ -205,3 +205,14 @@ function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gap
   }
 
 }
+
+
+  function expanding_circle(x, y, start_frame, max_circle_radius) {
+      this.start_frame = start_frame;
+
+      this.draw = function() {
+          radius = ((frameCount - start_frame) % (time_to_reset * 60)) / (time_to_reset * FRAMERATE) * max_circle_radius;
+          ellipse(center, center, radius, radius);
+      }
+
+  }

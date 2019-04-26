@@ -1,5 +1,5 @@
 var center = CANVAS_WIDTH / 2;
-var hex_radius = 15;
+var hex_radius = 30;
 var x = center;
 var y = center;
 var color_value;
@@ -28,7 +28,6 @@ function hex_random_walk(x, y, color_value) {
     show_color = color(d3.interpolateRainbow(color_value));
     hexagon(x, y, hex_radius, 0, show_color);
 
-    r = random() * 6;
     color_value += (random() * 0.05);
 
     if (color_value < 0) {
@@ -36,6 +35,22 @@ function hex_random_walk(x, y, color_value) {
     } else if (color_value > 1) {
         color_value -= 1;
     }
+
+    locs = generate_x_y(x, y)
+    new_x = locs[0]
+    new_y = locs[1]
+
+    while ((new_x < hex_radius) || (new_x > CANVAS_WIDTH) || (new_y < hex_radius) || (new_y > CANVAS_HEIGHT - hex_radius)) {
+        locs = generate_x_y(x, y)
+        new_x = locs[0]
+        new_y = locs[1]
+    }
+
+    return [new_x, new_y, color_value]
+}
+
+function generate_x_y(x, y) {
+    r = random() * 6;
 
     // top, top right, bottom right, bottom, bottom left, top left
     if (r <= 1) {
@@ -56,5 +71,5 @@ function hex_random_walk(x, y, color_value) {
         y -= hex_radius;
     }
 
-    return [x, y, color_value]
+    return [x, y]
 }
