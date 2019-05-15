@@ -58,6 +58,8 @@ function draw() {
   
   pop();
 
+  push();
+  rotate(radians((-frameCount / 5)));;
   noStroke();
   fill(color(247, 247, 247));
   ellipse(0, 0, 105, 105);
@@ -73,5 +75,5 @@ function draw() {
 
   fill(color(247, 247, 247));
   ellipse(0, 0, 25, 25);
-
+  pop();
 }
