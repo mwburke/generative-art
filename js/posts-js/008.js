@@ -11,7 +11,7 @@ function setup() {
     hex_radius_5 = 60;
     arm_length_5 = 175;
 
-    LIGHT_BLUE = '#94D0FF';
+    LIGHT_BLUE = '#94D0ff';
 
     CENTER = CANVAS_WIDTH / 2;
 
