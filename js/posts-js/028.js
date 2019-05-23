@@ -55,7 +55,7 @@ function draw() {
 
   fill(color(dark_red));
   ellipse(0, 0, inner_radius - circle_width, inner_radius - circle_width);
-  
+
   pop();
 
   push();
