@@ -216,3 +216,14 @@ function Cell(i, j, cellSize, xOffset, yOffset, fill_color, stroke_color, no_gap
       }
 
   }
+
+// p is the time between 0 and 1
+// g is the strength of the easing
+// muptiply times whatever thing you want to ease
+function ease(p, g) {
+  if (p < 0.5) {
+    return 0.5 * pow(2*p, g);
+  } else {
+    return 1 - 0.5 * pow(2*(1 - p), g);
+  }
+}

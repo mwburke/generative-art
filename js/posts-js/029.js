@@ -1,5 +1,6 @@
-var big_radius = 200;
+var big_radius = 250;
 var num_circles = 20;
+var swap = 0;
 
 function setup() {
   var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
