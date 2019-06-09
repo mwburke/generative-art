@@ -9,6 +9,7 @@ function setup() {
   translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   ellipseMode(CENTER);
   blendMode(DIFFERENCE);
+  smooth(8);
 
   color(3, 3, 3);
   noStroke();

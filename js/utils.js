@@ -227,3 +227,105 @@ function ease(p, g) {
     return 1 - 0.5 * pow(2*(1 - p), g);
   }
 }
+
+var trunchets = [trunchet1, trunchet2, trunchet3, trunchet4, trunchet5, trunchet6, trunchet7];
+
+
+function trunchet1(w, color_1, color_2) {
+  rectMode(CENTER);
+  noStroke();
+  fill(color_2);
+  rect(0, 0, w, w);
+
+  fill(color_1);
+  arc(-w / 2, -w / 2, w * 4 / 3, w * 4 / 3, 0, HALF_PI);
+  arc(w / 2, w / 2, w * 4 / 3, w * 4 / 3, PI, PI + HALF_PI);
+
+  fill(color_2);
+  arc(-w / 2, -w / 2, w * 2 / 3, w * 2 / 3, 0, HALF_PI);
+  arc(w / 2, w / 2, w * 2 / 3, w * 2 / 3, PI, PI + HALF_PI);
+}
+
+function trunchet2(w, color_1, color_2) {
+  rectMode(CENTER);
+  noStroke();
+  fill(color_2);
+  rect(0, 0, w, w);
+
+  fill(color_1);
+  rect(0, 0, w, w / 3);
+
+  arc(0, -w / 2, w / 3, w / 3, 0, PI);
+  arc(0, w / 2, w / 3, w / 3, PI, TWO_PI);
+}
+
+function trunchet3(w, color_1, color_2) {
+  rectMode(CENTER);
+  noStroke();
+  fill(color_2);
+  rect(0, 0, w, w);
+
+  fill(color_1);
+  arc(-w / 2, 0, w / 3, w / 3, HALF_PI + PI, HALF_PI);
+  arc(w / 2, 0, w / 3, w / 3, HALF_PI, HALF_PI + PI);
+  arc(0, -w / 2, w / 3, w / 3, 0, PI);
+  arc(0, w / 2, w / 3, w / 3, PI, TWO_PI);
+}
+
+function trunchet4(w, color_1, color_2) {
+  rectMode(CENTER);
+  noStroke();
+  fill(color_1);
+  rect(0, 0, w, w);
+
+  fill(color_2);
+  arc(-w / 2, -w / 2, w * 2 / 3, w * 2 / 3, 0, HALF_PI);
+  arc(w / 2, w / 2, w * 2 / 3, w * 2 / 3, PI, PI + HALF_PI);
+  arc(-w / 2, w / 2, w * 2 / 3, w * 2 / 3, -HALF_PI, 0);
+  arc(w / 2, -w / 2, w * 2 / 3, w * 2 / 3, HALF_PI, PI);
+}
+
+function trunchet5(w, color_1, color_2) {
+  rectMode(CENTER);
+  noStroke();
+  fill(color_2);
+  rect(0, 0, w, w);
+
+  fill(color_1);
+  rect(0, 0, w, w / 3);
+  rect(0, 0, w / 3, w);
+}
+
+function trunchet6(w, color_1, color_2) {
+  rectMode(CENTER);
+  noStroke();
+  fill(color_2);
+  rect(0, 0, w, w);
+
+  fill(color_1);
+  arc(w / 2, w / 2, w * 4 / 3, w * 4 / 3, PI, PI + HALF_PI);
+
+  fill(color_2);
+  arc(w / 2, w / 2, w * 2 / 3, w * 2 / 3, PI, PI + HALF_PI);
+
+  fill(color_1);
+  arc(-w / 2, 0, w / 3, w / 3, HALF_PI + PI, HALF_PI);
+  arc(0, -w / 2, w / 3, w / 3, 0, PI);
+}
+
+function trunchet7(w, color_1, color_2) {
+  rectMode(CENTER);
+  noStroke();
+  fill(color_2);
+  rect(0, 0, w, w);
+
+  fill(color_1);
+  rect(0, - w / 6, w, w * 2 / 3);
+
+  fill(color_2);
+  arc(-w / 2, -w / 2, w * 2 / 3, w * 2 / 3, 0, HALF_PI);
+  arc(w / 2, -w / 2, w * 2 / 3, w * 2 / 3, HALF_PI, PI);
+
+  fill(color_1);
+  arc(0, w / 2, w / 3, w / 3, PI, TWO_PI);
+}
