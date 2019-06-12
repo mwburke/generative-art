@@ -329,3 +329,73 @@ function trunchet7(w, color_1, color_2) {
   fill(color_1);
   arc(0, w / 2, w / 3, w / 3, PI, TWO_PI);
 }
+
+function side_trunchet(w, color_1, color_2) {
+  rectMode(CENTER);
+  noStroke();
+  fill(color_2);
+  rect(0, 0, w, w);
+  fill(color_1);
+  arc(-w / 2, 0, w / 3, w / 3, -HALF_PI, HALF_PI);
+  ellipse(0, w / 2, w / 3, w / 3);
+  ellipse(0, -w / 2, w / 3, w / 3);
+}
+
+// Helpful statistics scripts
+// https://observablehq.com/@nstrayer/javascript-statistics-snippets
+
+function gen_expon(lambda){
+  return -Math.log(1-Math.random())/lambda;
+}
+
+function gen_pois(lambda, max_its = 1000){
+  let i = -1, cum_sum = 0;
+  while(cum_sum < 1 && i < max_its){
+    i++;
+    cum_sum += -Math.log(1-Math.random())/lambda;  // Or use gen_expon()
+  }
+  return i;
+}
+
+function gen_discrete_unif(min = 0, max = 100){
+  const range = max - min;
+
+  return Math.round(Math.random()*range) + min;
+}
+
+// Array helpers
+
+function copy_array(arr){
+  return arr.map(obj => Object.assign({}, obj));
+}
+
+function weighted_sample(weights, values){
+  const random_val = Math.random();
+  let cumulative_prob = 0, i;
+  for(i = 0; i < weights.length; i++){
+    cumulative_prob += weights[i];
+    if(cumulative_prob > random_val) break;
+  }
+  // If we have values, return which one, otherwise just return index
+  return values ? values[i]: i;
+}
+
+function product(arr){
+  return arr.reduce((p, d) => p*d, 1);
+}
+
+function sum(arr){
+  return arr.reduce((s, el) => s + el, 0);
+}
+
+function normalize(arr){
+  const total_size = arr.reduce((s, el) => s + el, 0);
+  // or sum(arr);
+  return arr.map(el => el/total_size);
+}
+
+function unique(vec){
+  return [...new Set(vec)];
+}
+
+

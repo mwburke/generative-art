@@ -10,7 +10,7 @@ function setup() {
   smooth(8);
 
   var color_1 = color(0);
-  var color_2 = color(255);
+  var color_2 = color(247);
 
   var first_tile_index = Math.floor(Math.random()*trunchets.length);
     var second_tile_index = Math.floor(Math.random()*trunchets.length);
@@ -21,6 +21,34 @@ function setup() {
 
     var first_tile = trunchets[first_tile_index];
     var second_tile = trunchets[second_tile_index];
+
+    var draw_choice = Math.random();
+
+    if (draw_choice < 1.0) {
+      random_draw(color_1, color_2);
+    }
+
+    push();
+      translate(CANVAS_HEIGHT / num_squares / 2, CANVAS_HEIGHT / num_squares / 2);
+      for (var i = 0; i < num_squares - 2; i++) {
+        translate(0, CANVAS_HEIGHT / num_squares);
+        push();
+          rotate(PI);
+          side_trunchet(CANVAS_WIDTH / num_squares, color_1, color_2);
+        pop();
+        push();
+          translate(CANVAS_HEIGHT * (num_squares - 1) / num_squares, 0);
+          push();
+            // rotate();
+            side_trunchet(CANVAS_WIDTH / num_squares, color_1, color_2);
+          pop();
+        pop();
+      }
+    pop();
+
+}
+
+function random_draw(color_1, color_2) {
 
     for (var i = 0; i < num_squares; i++) {
         push();
@@ -71,4 +99,28 @@ function setup() {
         }
         pop();
     }
+
+    fill(color_2);
+    noStroke();
+    rect(0, 0, CANVAS_WIDTH / num_squares, CANVAS_WIDTH / num_squares);
+    rect(0, CANVAS_WIDTH - CANVAS_WIDTH / num_squares, CANVAS_WIDTH / num_squares, CANVAS_WIDTH / num_squares);
+    rect(CANVAS_WIDTH - CANVAS_WIDTH / num_squares, 0, CANVAS_WIDTH / num_squares, CANVAS_WIDTH / num_squares);
+    rect(CANVAS_WIDTH - CANVAS_WIDTH / num_squares, CANVAS_WIDTH - CANVAS_WIDTH / num_squares, CANVAS_WIDTH / num_squares, CANVAS_WIDTH / num_squares);
+    push();
+      translate(CANVAS_HEIGHT / num_squares / 2, CANVAS_HEIGHT / num_squares / 2);
+      for (var i = 0; i < num_squares - 2; i++) {
+        translate(CANVAS_HEIGHT / num_squares, 0);
+        push();
+          rotate(PI + HALF_PI);
+          side_trunchet(CANVAS_WIDTH / num_squares, color_1, color_2);
+        pop();
+        push();
+          translate(0, CANVAS_HEIGHT * (num_squares - 1) / num_squares);
+          push();
+            rotate(HALF_PI);
+            side_trunchet(CANVAS_WIDTH / num_squares, color_1, color_2);
+          pop();
+        pop();
+      }
+    pop();
 }
