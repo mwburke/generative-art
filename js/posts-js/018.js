@@ -52,7 +52,11 @@ function generate() {
     }
 }
 
-function mousePressed() {
+
+function keyPressed() {
+  if (key == 'R') {
+    // num_squares = 20 - Math.floor(Math.random() * 2) * 10
     background(247, 247, 247);
     generate();
+  }
 }

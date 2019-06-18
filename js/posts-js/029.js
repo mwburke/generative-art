@@ -6,6 +6,13 @@ function setup() {
   var myCanvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
   myCanvas.parent('viz029');
   background(247, 247, 247);
+
+  noLoop();
+}
+
+function draw() {
+  background(247, 247, 247);
+  push();
   translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   ellipseMode(CENTER);
   blendMode(DIFFERENCE);
@@ -45,6 +52,7 @@ function setup() {
     triangle(-5.2, 0.17 * big_radius, 5.2, 0.17 * big_radius, 0, 10)
   }
   pop();
+  pop();
 }
 
 function mousePressed() {
@@ -74,4 +82,11 @@ function updatePixel(x, y) {
         }
       }
     }
+}
+
+function keyPressed() {
+  if (key == 'R') {
+    // num_squares = 20 - Math.floor(Math.random() * 2) * 10
+    draw();
+  }
 }

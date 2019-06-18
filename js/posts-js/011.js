@@ -85,8 +85,10 @@ function get_color(colors) {
 }
 
 
-function mousePressed() {
+function keyPressed() {
+  if (key == 'R') {
     palette_num = Math.floor(random(color_palettes.length));
     prob_num = Math.floor(random(probs.length));
     generate();
+  }
 }

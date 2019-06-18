@@ -79,7 +79,10 @@ function circle(x, y, min_radius, max_radius, circle_color) {
   }
 }
 
-function mousePressed() {
-    color_palette = color_palettes[Math.floor(random(color_palettes.length))];
+
+function keyPressed() {
+  if (key == 'R') {
+     color_palette = color_palettes[Math.floor(random(color_palettes.length))];
     circles = [];
+  }
 }

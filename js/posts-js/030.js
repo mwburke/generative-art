@@ -25,6 +25,11 @@ function setup() {
     myCanvas.parent('viz030');
     background(247, 247, 247);
 
+    noLoop();
+}
+
+function draw() {
+
     var first_tile_index = Math.floor(Math.random()*tiles.length);
     var second_tile_index = Math.floor(Math.random()*tiles.length);
 
@@ -708,4 +713,11 @@ function tile9(side_length, background_color, primary_color, secondary_color = n
     ellipse(0, 0, small_radius, small_radius);
     ellipse(0, 0, tiny_radius, tiny_radius);
 
+}
+
+function keyPressed() {
+  if (key == 'R') {
+    // num_squares = 20 - Math.floor(Math.random() * 2) * 10
+    draw();
+  }
 }

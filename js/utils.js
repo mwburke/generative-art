@@ -228,7 +228,9 @@ function ease(p, g) {
   }
 }
 
-var trunchets = [trunchet1, trunchet2, trunchet3, trunchet4, trunchet5, trunchet6, trunchet7];
+// removed trunchet 5, the straight cross one
+// adds some inorganic straight lines I wasn't liking on the small ones
+var trunchets = [trunchet1, trunchet2, trunchet3, trunchet4, trunchet6, trunchet7];
 
 
 function trunchet1(w, color_1, color_2) {

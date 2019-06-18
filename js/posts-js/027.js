@@ -12,6 +12,10 @@ function setup() {
     myCanvas.parent('viz027');
     background(247, 247, 247);
 
+    set_colors();
+}
+
+function set_colors() {
     var constant_color;
 
     if (Math.random() < 0.5) {
@@ -133,4 +137,12 @@ function square_element(c) {
 
         rect(width * 0.1 + x, height * 0.1 + y, width * 0.8, height * 0.8, 5);
     }
+}
+
+
+function keyPressed() {
+  if (key == 'R') {
+    // num_squares = 20 - Math.floor(Math.random() * 2) * 10
+    set_colors();
+  }
 }

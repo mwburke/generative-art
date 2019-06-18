@@ -43,6 +43,8 @@ function stroke_generator(i, j) {
     return color(0, 0, 0, 0);
 }
 
-function mousePressed() {
+function keyPressed() {
+  if (key == 'R') {
     generate();
+  }
 }
