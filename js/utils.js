@@ -343,6 +343,120 @@ function side_trunchet(w, color_1, color_2) {
   ellipse(0, -w / 2, w / 3, w / 3);
 }
 
+/** Function to take in a N x N array of pixel
+ *  and return the truchet tile number along with
+ *  the rotation amount.
+ *  Identifies which tile to use based on the overall
+ *  brightness compared to the threshold in each quarter.
+ */
+function truchify(x_lb, x_ub, y_lb, y_ub, threshold) {
+  var brightnesses;
+  var ul, ur, bl, br;
+
+  brightnesses = [];
+
+  for (var i = (y_ub - y_lb) / 2 + y_lb; i < y_ub; i++) {
+    for (var j = x_lb; j <= (x_ub - x_lb) / 2 + x_lb; j++) {
+      brightnesses.push(get_pixel_brightness(j, i))
+    }
+  }
+  ul = is_dark(brightnesses, threshold);
+
+  brightnesses = [];
+  for (var i = (y_ub - y_lb) / 2 + y_lb; i < y_ub; i++) {
+    for (var j = (x_ub - x_lb) / 2 + x_lb; j < x_ub; j++) {
+      brightnesses.push(get_pixel_brightness(j, i))
+    }
+  }
+  ur = is_dark(brightnesses, threshold);
+
+  brightnesses = [];
+  for (var i = y_lb; i < (y_ub - y_lb) / 2 + y_lb; i++) {
+    for (var j = x_lb; j < (x_ub - x_lb) / 2 + x_lb; j++) {
+      brightnesses.push(get_pixel_brightness(j, i))
+    }
+  }
+  bl = is_dark(brightnesses, threshold);
+
+  brightnesses = [];
+  for (var i = y_lb; i < (y_ub - y_lb) / 2 + y_lb; i++) {
+    for (var j = (x_ub - x_lb) / 2 + x_lb; j < x_ub; j++) {
+      brightnesses.push(get_pixel_brightness(j, i))
+    }
+  }
+  br = is_dark(brightnesses, threshold);
+
+  if ((ul + ur + bl + br) == 0) {
+    return [2, 0];
+  } else if ((ul + ur + bl + br) == 1) {
+    if (ul) {
+      return [4, PI];
+    } else if (ur) {
+      return [4, PI + HALF_PI];
+    } else if (bl) {
+      return [4, HALF_PI];
+    } else {
+      return [4, 0];
+    }
+  } else if ((ul + ur + bl + br) == 2) {
+    if (ul + ur) {
+      return [5, 0];
+    } else if (ur + br) {
+      return [5, HALF_PI];
+    } else if (br + bl) {
+      return [5, PI];
+    } else if (bl + ul) {
+      return [5, PI + HALF_PI];
+    } else if (ur + bl) {
+      return [0, 0];
+    } else {
+      return [0, HALF_PI];
+    }
+  } else {
+    return [3, 0];
+  }
+
+}
+
+function get_pixel_brightness(x, y) {
+    let d = pixelDensity();
+    var total_brightness = 0;
+    var counts = 0;
+    for (let i = 0; i < d; i++) {
+      for (let j = 0; j < d; j++) {
+        // loop over
+        counts += 1;
+        index = 4 * ((y * d + j) * width * d + (x * d + i));
+        total_brightness = (pixels[index] + pixels[index + 1] + pixels[index + 2]) / 3;
+      }
+    }
+
+    return total_brightness / counts;
+}
+
+function is_dark(brightnesses, threshold) {
+  return (sum(brightnesses) / brightnesses.length) < threshold;
+}
+
+function apply_truchets(w) {
+    loadPixels();
+    var color_1 = color(0);
+    var color_2 = color(247);
+
+    for (var i = 0; i < height / w; i++) {
+        for (var j = 0; j < width / w; j++) {
+            var res = truchify(j * w, (j + 1) * w, height - (i + 1) * w, height - i * w, threshold);
+            push();
+                translate(j * w + w / 2, height - i * w - w / 2);
+                rotate(res[1]);
+                trunchets[res[0]](w, color_1, color_2);
+            pop();
+        }
+    }
+    // updatePixels();
+}
+
+
 // Helpful statistics scripts
 // https://observablehq.com/@nstrayer/javascript-statistics-snippets
 
@@ -366,6 +480,12 @@ function gen_discrete_unif(min = 0, max = 100){
 }
 
 // Array helpers
+
+function flatten(arr) {
+  return arr.reduce(function (flat, toFlatten) {
+    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+  }, []);
+}
 
 function copy_array(arr){
   return arr.map(obj => Object.assign({}, obj));
