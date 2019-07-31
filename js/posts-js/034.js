@@ -1,4 +1,5 @@
 let points;
+let delaunay;
 let dl_triangles = [];
 let dist_matrix;
 const dist_between_circles = 35;
@@ -50,7 +51,7 @@ function draw_points(points) {
  */
 
 function generate_delaunay_triangles(points) {
-    const delaunay = new Delaunator.from(points);
+    delaunay = new Delaunator.from(points);
     for (let triangle_id = 0; triangle_id < delaunay.triangles.length / 3; triangle_id++) {
         let triangle_points = [];
         for (var i = 0; i < 3; i++) {
@@ -67,7 +68,7 @@ function draw_merged_triangles() {
     for (var i = 0; i < dl_triangles.length; i++) {
         let t = dl_triangles[i];
         if (~t.visited) {
-            const closest_tri_index = dist_matrix[i]
+
         }
     }
 }
