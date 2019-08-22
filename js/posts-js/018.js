@@ -40,8 +40,8 @@ function generate() {
 
     for (var i=0; i < num_squares_side; i++) {
         for (var j=0; j < num_squares_side; j++) {
-            x = i * CANVAS_WIDTH / num_squares_side;
-            y = j * CANVAS_HEIGHT / num_squares_side;
+            x = i * width / num_squares_side;
+            y = j * height / num_squares_side;
             r = get_closest_distance([x, y], red_points);
             g = get_closest_distance([x, y], green_points);
             b = get_closest_distance([x, y], blue_points);

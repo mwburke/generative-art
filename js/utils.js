@@ -626,3 +626,109 @@ function forEachVoronoiCell(points, delaunay, callback) {
 function distance(v1, v2) {
     return ((v1[0]-v2[0])**2 + (v1[1]-v2[1])**2)**0.5
 }
+
+function bounding_box(points) {
+  const min_x = points.reduce((min, p) => p[0] < min ? p[0] : min, points[0][0]);
+  const max_x = points.reduce((max, p) => p[0] > max ? p[0] : max, points[0][0]);
+  const min_y = points.reduce((min, p) => p[1] < min ? p[1] : min, points[0][1]);
+  const max_y = points.reduce((max, p) => p[1] > max ? p[1] : max, points[0][1]);
+
+  return [min_x, min_y, max_x, max_y];
+}
+
+
+function intersect_point(point1, point2, point3, point4) {
+   const ua = ((point4[0] - point3[0]) * (point1[1] - point3[1]) -
+             (point4[1] - point3[1]) * (point1[0] - point3[0])) /
+            ((point4[1] - point3[1]) * (point2[0] - point1[0]) -
+             (point4[0] - point3[0]) * (point2[1] - point1[1]));
+
+  const ub = ((point2[0] - point1[0]) * (point1[1] - point3[1]) -
+             (point2[1] - point1[1]) * (point1[0] - point3[0])) /
+            ((point4[1] - point3[1]) * (point2[0] - point1[0]) -
+             (point4[0] - point3[0]) * (point2[1] - point1[1]));
+
+  const x = point1[0] + ua * (point2[0] - point1[0]);
+  const y = point1[1] + ua * (point2[1] - point1[1]);
+
+  let out_of_bounds = false;
+  if ((ua < 0) | (ua > 1) | (ub < 0) | (ub > 1)) {
+    out_of_bounds = true;
+  }
+
+  return [x, y, out_of_bounds]
+}
+
+function find_min_intersect_segment(point1, point2, points) {
+  let dist = 100000000000000;
+  let draw_points, res, intersect1, intersect2, intersect_dist;
+
+  for (let i = 0; i < points.length; i++) {
+    res = intersect_point(point1, point2, points[i], points[(i + 1) % points.length]);
+    if (res[2]) {
+      continue;
+    } else {
+      intersect1 = [res[0], res[1]];
+    }
+    for (let j = i + 1; j < points.length; j++) {
+      res =  intersect_point(point1, point2, points[(j) % points.length], points[(j + 1) % points.length]);
+      if (res[2]) {
+      continue;
+      } else {
+        intersect2 = [res[0], res[1]];
+      }
+      intersect_dist = distance(intersect1, intersect2);
+      if (intersect_dist <= dist) {
+
+        dist = intersect_dist;
+        draw_points = [intersect1, intersect2];
+      }
+    }
+  }
+  return draw_points;
+}
+
+
+function polygon_points(x, y, radius, npoints) {
+  let angle = TWO_PI / npoints;
+  let points = [];
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius;
+    let sy = y + sin(a) * radius;
+
+    points.push([sx, sy]);
+  }
+  return points;
+}
+
+function draw_angled_lines(points, num_lines, angle) {
+  const bounds = bounding_box(points);
+  const box_length = Math.abs(bounds[0] - bounds[2]);
+  const angle_offset_length = box_length * sin(angle);
+  let bottom_point, top_point, draw_points;
+  if (angle_offset_length >= 0) {
+    bottom_point = [bounds[0], bounds[1]];
+    top_point = [bounds[0] - angle_offset_length, bounds[3]];
+  } else {
+    bottom_point = [bounds[0] + angle_offset_length, bounds[1]];
+    top_point = [bounds[0], bounds[3]];
+  }
+  const total_length = box_length + Math.abs(angle_offset_length);
+  const increment_length = total_length / num_lines;
+
+  for (let i = 0; i < num_lines; i++) {
+    bottom_point[0] += increment_length;
+    top_point[0] += increment_length;
+    draw_points = find_min_intersect_segment(bottom_point, top_point, points);
+    if (draw_points != null) {
+      line(draw_points[0][0], draw_points[0][1], draw_points[1][0], draw_points[1][1]);
+      // noStroke();
+      // fill(255,0,0);
+      // for (var j = 0; j < 1; j += 0.05) {
+      //   ellipse(lerp(draw_points[0][0], draw_points[1][0], j),
+      //           lerp(draw_points[0][1], draw_points[1][1], j),
+      //           5);
+      // }
+    }
+  }
+}
