@@ -137,7 +137,7 @@ function get_center(points) {
 
 function draw_voronoi_cell(points) {
     push();
-    
+
     const center = get_center(points);
     if (include_color) {
 		colorMode(HSB, 1);
