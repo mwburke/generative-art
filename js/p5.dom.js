@@ -424,7 +424,7 @@
    * </code></div>
    */
   p5.prototype.createSlider = function(min, max, value, step) {
-    p5._validateParameters('createSlider', arguments);
+    // p5._validateParameters('createSlider', arguments);
     var elt = document.createElement('input');
     elt.type = 'range';
     elt.min = min;
@@ -577,7 +577,7 @@
    */
 
   p5.prototype.createSelect = function() {
-    p5._validateParameters('createSelect', arguments);
+    // p5._validateParameters('createSelect', arguments);
     var elt, self;
     var arg = arguments[0];
     if (typeof arg === 'object' && arg.elt.nodeName === 'SELECT') {

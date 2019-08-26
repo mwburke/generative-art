@@ -15,7 +15,6 @@ function draw() {
 
 function generate() {
 	include_color = true; // (Math.random() < 0.70) ? true : false;
-	console.log(include_color);
 	first_color = Math.random();
 	second_color = Math.random();
 
@@ -167,7 +166,7 @@ function draw_voronoi_cell(points) {
 
 
 function keyPressed() {
-  if (key == 'R') {
+  if (key == 'r') {
     // num_squares = 20 - Math.floor(Math.random() * 2) * 10
     generate();
   }

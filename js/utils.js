@@ -732,3 +732,52 @@ function draw_angled_lines(points, num_lines, angle) {
     }
   }
 }
+
+function remove_close_points(points, min_threshold) {
+    let res = get_min_index(points);
+    let index = res[0];
+    let min_value = res[1];
+
+    while ((points.length > 2) & (min_value < min_threshold)) {
+        points.splice(index, 1);
+        res = get_min_index(points)
+        index = res[0];
+        min_value = res[1];
+    }
+
+    return points
+}
+
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+}
+
+function get_min_index(points) {
+    let values = [];
+    let min_values = [];
+
+    for (let i = 0; i < points.length - 1; i++) {
+        let col_points = [];
+        for (let j = 0; j < points.length; j++) {
+            if (j != i) {
+                col_points.push(distance(points[i], points[j]));
+            }
+        }
+        values.push(col_points);
+        min_values.push(min(col_points));
+    }
+
+    const point_index = get_arr_min_index(min_values);
+    return [point_index, min_values[point_index]];
+}
+
+function get_arr_min_index(arr) {
+    return arr.reduce((iMax, x, i, arr) => x < arr[iMax] ? i : iMax, 0)
+}
