@@ -716,7 +716,7 @@ function tile9(side_length, background_color, primary_color, secondary_color = n
 }
 
 function keyPressed() {
-  if (key == 'R') {
+  if (key == 'r') {
     // num_squares = 20 - Math.floor(Math.random() * 2) * 10
     draw();
   }

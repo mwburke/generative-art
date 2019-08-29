@@ -44,7 +44,7 @@ function stroke_generator(i, j) {
 }
 
 function keyPressed() {
-  if (key == 'R') {
+  if (key == 'r') {
     generate();
   }
 }

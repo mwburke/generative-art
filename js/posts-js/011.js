@@ -86,7 +86,7 @@ function get_color(colors) {
 
 
 function keyPressed() {
-  if (key == 'R') {
+  if (key == 'r') {
     palette_num = Math.floor(random(color_palettes.length));
     prob_num = Math.floor(random(probs.length));
     generate();

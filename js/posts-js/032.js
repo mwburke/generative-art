@@ -406,7 +406,7 @@ function draw_tile_group(color_1, color_2, edge_length, no_small=false) {
 }
 
 function keyPressed() {
-  if (key == 'R') {
+  if (key == 'r') {
     // num_squares = 20 - Math.floor(Math.random() * 2) * 10
     draw();
   }

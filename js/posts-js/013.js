@@ -81,7 +81,7 @@ function circle(x, y, min_radius, max_radius, circle_color) {
 
 
 function keyPressed() {
-  if (key == 'R') {
+  if (key == 'r') {
      color_palette = color_palettes[Math.floor(random(color_palettes.length))];
     circles = [];
   }

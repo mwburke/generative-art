@@ -781,3 +781,243 @@ function get_min_index(points) {
 function get_arr_min_index(arr) {
     return arr.reduce((iMax, x, i, arr) => x < arr[iMax] ? i : iMax, 0)
 }
+
+
+// Hex connection drawing functions:
+
+function draw_connection_straight(radius, line_width, extend=false) {
+  noFill();
+  strokeCap(SQUARE);
+  strokeWeight(line_width);
+  const len = radius * cos(PI / 6);
+  if (!extend) {
+    line(0, -len, 0, len);
+  } else {
+    line(0, -len * 1.05, 0, len * 1.05);
+  }
+
+}
+
+function draw_connection_long_curve(radius, line_width, extend=false) {
+  const center = [0, 0];
+  const len = radius * cos(PI / 6);
+  noFill();
+  strokeCap(SQUARE);
+  strokeWeight(line_width);
+  if (!extend) {
+    arc(radius * 1.5, len,
+      radius * 3, radius * 3,
+      PI, PI + PI / 3);
+  } else {
+    arc(radius * 1.5, len,
+        radius * 3, radius * 3,
+        PI - PI * 0.05, PI + PI / 3 + PI * 0.05);
+  }
+}
+
+function draw_connection_short_curve(radius, line_width, extend=false) {
+  const len = radius * cos(PI / 6);
+  noFill();
+  strokeCap(SQUARE);
+  strokeWeight(line_width);
+  if (!extend) {
+    arc(radius / 2, len,
+      radius, radius,
+      PI, PI + PI * 2 / 3);
+  } else {
+    arc(radius / 2, len,
+      radius, radius,
+      PI - PI * 0.05, PI + PI * 2 / 3 + PI * 0.05);
+  }
+
+}
+
+function draw_connection(type, radius, line_width) {
+  if (type == 'straight') {
+    draw_connection_straight(radius, line_width);
+  } else if (type == 'long') {
+    draw_connection_long_curve(radius, line_width);
+  } else if (type == 'short') {
+    draw_connection_short_curve(radius, line_width);
+  }
+}
+
+
+function drawConnection(connection, color_1, color_2, radius, line_width, color_ratio) {
+  push();
+  noFill();
+  let type;
+  if (Math.abs(connection[0] - connection[1]) == 3) {
+    type = 'straight';
+    if ((connection[0] == 0) | (connection[0] == 3)) {
+      rotate(0);
+    } else if ((connection[0] == 1) | (connection[0] == 4)) {
+      rotate(PI / 3);
+    } else {
+      rotate(-PI / 3);
+    }
+  } else if (connection[0] == 0) {
+    switch(connection[1]) {
+      case 1:
+        type = 'short'
+        rotate(PI / 3);
+        break;
+      case 2:
+        type = 'long'
+        rotate(PI * 2 / 3);
+        break;
+      case 4:
+        type = 'long'
+        break;
+      case 5:
+        type = 'short'
+        break;
+    }
+  } else if (connection[0] == 1) {
+    switch(connection[1]) {
+      case 0:
+        type = 'short'
+        rotate(PI / 3);
+        break;
+      case 2:
+        type = 'short'
+        rotate(PI * 2 / 3);
+        break;
+      case 3:
+        type = 'long'
+        rotate(PI);
+        break;
+      case 5:
+        type = 'long'
+        rotate(PI / 3);
+        break;
+    }
+  } else if (connection[0] == 2) {
+    switch(connection[1]) {
+      case 0:
+        type = 'long'
+        rotate(PI * 2 / 3);
+        break;
+      case 1:
+        type = 'short'
+        rotate(PI * 2 / 3);
+        break;
+      case 3:
+        type = 'short'
+        rotate(-PI);
+        break;
+      case 4:
+        type = 'long'
+        rotate(-PI * 2 / 3);
+        break;
+    }
+  } else if (connection[0] == 3) {
+    switch(connection[1]) {
+      case 1:
+        type = 'long'
+        rotate(-PI);
+        break;
+      case 2:
+        type = 'short'
+        rotate(-PI);
+        break;
+      case 4:
+        type = 'short'
+        rotate(-PI * 2 / 3);
+        break;
+      case 5:
+        type = 'long'
+        rotate(-PI / 3);
+        break;
+    }
+  } else if (connection[0] == 4) {
+    switch(connection[1]) {
+      case 0:
+        type = 'long'
+        break;
+      case 2:
+        type = 'long'
+        rotate(-PI * 2 / 3);
+        break;
+      case 3:
+        type = 'short'
+        rotate(-PI * 2 / 3);
+        break;
+      case 5:
+        type = 'short'
+        rotate(-PI / 3);
+        break;
+    }
+  } else if (connection[0] == 5) {
+    switch(connection[1]) {
+      case 0:
+        type = 'short'
+        break;
+      case 1:
+        type = 'long'
+        rotate(PI / 3);
+        break;
+      case 3:
+        type = 'long'
+        rotate(-PI / 3);
+        break;
+      case 4  :
+        type = 'short';
+        rotate(-PI / 3);
+        break;
+    }
+  }
+  stroke(color_1);
+  draw_connection(type, radius, line_width);
+  stroke(color_2);
+  draw_connection(type, radius, line_width * color_ratio, true)
+  pop();
+}
+
+class ConnectionHexagon {
+  constructor(x, y, rotation, radius, color_1, color_2, color_ratio, connections=null) {
+    this.x = x;
+    this.y = y;
+    this.rotation = rotation;
+    this.radius = radius;
+    this.line_width = radius / 3;
+    this.color_1 = color_1;
+    this.color_2 = color_2;
+    this.color_ratio = color_ratio;
+    if (connections == null) {
+      this.makeConnections();
+    } else {
+      this.connections = connections;
+    }
+  }
+
+  makeConnections() {
+    let connections = [0, 1, 2, 3, 4, 5];
+    connections = shuffle(connections);
+    this.connections = [[connections[0], connections[1]],
+          [connections[2], connections[3]],
+          [connections[4], connections[5]]
+         ];
+  }
+
+  spinRight() {
+    this.rotation -= PI / 3;
+  }
+
+  draw() {
+    push();
+    translate(this.x, this.y);
+    rotate(this.rotation);
+    for (let i = 0; i < this.connections.length; i++) {
+      drawConnection(this.connections[i],
+                     this.color_1,
+                     this.color_2,
+                     this.radius,
+                     this.line_width,
+                     this.color_ratio);
+    };
+    pop();
+  }
+
+
+}

@@ -310,7 +310,7 @@ function draw_leaf2(points) {
 
 
 function keyPressed() {
-  if (key == 'R') {
+  if (key == 'r') {
     // num_squares = 20 - Math.floor(Math.random() * 2) * 10
     generate();
   }

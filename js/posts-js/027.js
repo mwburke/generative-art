@@ -141,7 +141,7 @@ function square_element(c) {
 
 
 function keyPressed() {
-  if (key == 'R') {
+  if (key == 'r') {
     // num_squares = 20 - Math.floor(Math.random() * 2) * 10
     set_colors();
   }
