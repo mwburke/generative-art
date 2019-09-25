@@ -1021,3 +1021,151 @@ class ConnectionHexagon {
 
 
 }
+
+
+const hex_triangles = [
+  function stripe(side_length, color_1, color_2) {
+    const height = side_length * (3 ** 0.5) / 2;
+    const left_point = [-side_length / 2,
+                         height]
+    const right_point = [side_length / 2,
+                         height];
+    const base_point = [0, 0];
+
+    strokeWeight(side_length / 20);
+    stroke(color_1);
+    fill(color_2);
+    beginShape();
+      vertex(base_point[0], base_point[1]);
+      vertex(left_point[0], left_point[1]);
+      vertex(right_point[0], right_point[1]);
+    endShape(CLOSE);
+
+    for (let i = 1; i < 8; i=i+2) {
+      noStroke();
+      fill(color_1);
+      beginShape();
+      vertex(lerp(base_point[0], right_point[0], i / 8),
+             lerp(base_point[1], right_point[1], i / 8)
+      );
+      vertex(lerp(base_point[0], right_point[0], (i + 1) / 8),
+             lerp(base_point[1], right_point[1], (i + 1) / 8)
+      );
+      vertex(lerp(base_point[0], left_point[0], (i + 1) / 8),
+             lerp(base_point[1], left_point[1], (i + 1) / 8)
+      );
+      vertex(lerp(base_point[0], left_point[0], i / 8),
+             lerp(base_point[1], left_point[1], i / 8)
+      );
+      endShape(CLOSE);
+    }
+  },
+   function flag_stripe(side_length, color_1, color_2) {
+    const height = side_length * (3 ** 0.5) / 2;
+    const left_point = [-side_length / 2,
+                         height]
+    const right_point = [side_length / 2,
+                         height];
+    const base_point = [0, 0];
+
+    strokeWeight(side_length / 20);
+    stroke(color_1);
+    fill(color_2);
+    beginShape();
+      vertex(base_point[0], base_point[1]);
+      vertex(left_point[0], left_point[1]);
+      vertex(right_point[0], right_point[1]);
+    endShape(CLOSE);
+
+    for (let i = 1; i < 8; i=i+2) {
+      noStroke();
+      fill(color_1);
+      beginShape();
+      vertex(lerp(base_point[0], right_point[0], i / 8),
+             lerp(base_point[1], right_point[1], i / 8)
+      );
+      vertex(lerp(base_point[0], right_point[0], (i + 1) / 8),
+             lerp(base_point[1], right_point[1], (i + 1) / 8)
+      );
+      vertex(lerp(base_point[0], left_point[0], (i + 1) / 8),
+             lerp(base_point[1], left_point[1], (i + 1) / 8)
+      );
+      vertex(lerp(base_point[0], left_point[0], i / 8),
+             lerp(base_point[1], left_point[1], i / 8)
+      );
+      endShape(CLOSE);
+    }
+
+    beginShape();
+    vertex(0, 0);
+    vertex(lerp(base_point[0], right_point[0], 1 / 10),
+           lerp(base_point[1], right_point[1], 1 / 10)
+    );
+    vertex(left_point[0] + side_length / 10,
+           height
+    );
+    vertex(left_point[0], left_point[1]);
+    endShape(CLOSE);
+  },
+  function inner(side_length, color_1, color_2) {
+    const height = side_length * (3 ** 0.5) / 2;
+    const left_point = [-side_length / 2,
+                         height]
+    const right_point = [side_length / 2,
+                         height];
+    const base_point = [0, 0];
+
+    strokeWeight(side_length / 20);
+    stroke(color_1);
+    fill(color_2);
+    beginShape();
+      vertex(base_point[0], base_point[1]);
+      vertex(left_point[0], left_point[1]);
+      vertex(right_point[0], right_point[1]);
+    endShape(CLOSE);
+
+    const center = [0, height * 2 / 3];
+    fill(color_1);
+    beginShape();
+      vertex(lerp(base_point[0], center[0], 0.3),
+             lerp(base_point[1], center[1], 0.3)
+      );
+      vertex(lerp(left_point[0], center[0], 0.3),
+             lerp(left_point[1], center[1], 0.3)
+      );
+      vertex(lerp(right_point[0], center[0], 0.3),
+             lerp(right_point[1], center[1], 0.3)
+      );
+    endShape(CLOSE);
+    fill(color_2);
+    beginShape();
+      vertex(lerp(base_point[0], center[0], 0.6),
+             lerp(base_point[1], center[1], 0.6)
+      );
+      vertex(lerp(left_point[0], center[0], 0.6),
+             lerp(left_point[1], center[1], 0.6)
+      );
+      vertex(lerp(right_point[0], center[0], 0.6),
+             lerp(right_point[1], center[1], 0.6)
+      );
+    endShape(CLOSE);
+  },
+  function checker(side_length, color_1, color_2) {
+    const height = side_length * (3 ** 0.5) / 2;
+    const left_point = [-side_length / 2,
+                         height]
+    const right_point = [side_length / 2,
+                         height];
+    const base_point = [0, 0];
+
+    strokeWeight(side_length / 20);
+    stroke(color_1);
+    fill(color_2);
+    beginShape();
+      vertex(base_point[0], base_point[1]);
+      vertex(left_point[0], left_point[1]);
+      vertex(right_point[0], right_point[1]);
+    endShape(CLOSE);
+  }
+]
+;
