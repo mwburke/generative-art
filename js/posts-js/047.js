@@ -211,6 +211,47 @@ const draw_functions = [
             stroke(lerpColor(color(247), c, distance([points[i][0], points[i][1]], [width / 2, height / 2]) / max_length));
         }
         endShape(CLOSE);
+        pop();
+    },
+    function random_to_white_color_distance(points, palette, num_points_list, c) {
+        const centroid = get_center(points);
+        const max_length = distance([0, 0], [width / 2, height / 2]);
+        const t = distance([centroid[0], centroid[1]], [width / 2, height / 2]) / max_length;
+        console.log(t);
+        if (Math.random() < (1 - t)) {
+            c = palette[Math.floor(Math.random() * palette.length)];
+        } else {
+            c = color(247)
+        }
+        push();
+        noStroke();
+        stroke(247);
+        fill(c);
+        beginShape();
+        for (let i = 0; i < points.length; i++) {
+            vertex(points[i][0], points[i][1])
+        }
+        endShape(CLOSE);
+        pop();
+    },
+    function random_to_color_distance(points, palette, num_points_list, c) {
+        const centroid = get_center(points);
+        const max_length = distance([0, 0], [width / 2, height / 2])
+        const t = distance([centroid[0], centroid[1]], [width / 2, height / 2]) / max_length;
+        console.log(t);
+        if (Math.random() < (1 - t)) {
+            c = palette[Math.floor(Math.random() * palette.length)];
+        }
+        push();
+        stroke(247);
+        fill(c);
+        noStroke();
+        beginShape();
+        for (let i = 0; i < points.length; i++) {
+            vertex(points[i][0], points[i][1])
+        }
+        endShape(CLOSE);
+        pop();
     },
 ]
 
